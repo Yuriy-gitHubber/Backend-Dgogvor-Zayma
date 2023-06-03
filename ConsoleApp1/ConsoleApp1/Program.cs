@@ -181,6 +181,7 @@ namespace ConsoleApp1
             Console.Write("ПО ДОГОВОРУ ПРОЦЕНТ НАЧИСЛЯЕТСЯ КАЖДЫЙ? 1 - ДЕНЬ. 2 - МЕСЯЦ. 3 - ГОД. 4 - Не Указан. ВАШ ОТВЕТ:");
             PercentType = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine();
+            if (ZaymPercent != 0 )
             switch (PercentType)
             {
                 case 1:
