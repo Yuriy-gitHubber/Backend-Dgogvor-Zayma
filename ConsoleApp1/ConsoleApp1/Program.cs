@@ -40,26 +40,6 @@ namespace ConsoleApp1
             double ZaymSumm, ZaymPercent=0, CBPercent, ShtrafSize, PennyPercent, ItogSumm;
             double PercentCount = 0; 
             DateTime StartDate, FinishDate, DateTrebovania;
-            //Дата, до которого % в два раза превышающий ставку ЦБ не признавался ростовщическим!!!
-            DateTime RostDate = new DateTime(2018, 6, 1);
-
-            //Console.WriteLine("Год до которого % в два раза превышающий ставку ЦБ\n" +
-            //                  "не признавался ростовщическим " + RostDate);
-
-
-            //Console.WriteLine("Введите дату заключения договора");
-            //DateTime date1 = inputDate();
-            //if (date1 > RostDate)
-            //    Console.WriteLine("Заём совершен после даты введения рост. проыентов");
-            //Console.WriteLine("Введите дату возврата договора");
-            //DateTime date2 = inputDate();
-            //Console.WriteLine(date1);
-            //Console.WriteLine("Кол-во дней между датами = " + (date2.Day - date1.Day));
-            //Console.WriteLine("Кол-во месяцев между датами = " + (date2.Month - date1.Month));
-            //Console.WriteLine("Кол-во лет между датами = " + (date2.Year - date1.Year));
-
-
-
 
             //------------------------------------------------------//
             Console.WriteLine("Введите данные о договоре займа");
