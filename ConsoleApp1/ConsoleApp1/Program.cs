@@ -4,6 +4,7 @@ using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,8 @@ namespace ConsoleApp1
 {
     internal class Program
     {
+
+
         static void CountTime()
         { 
         
@@ -32,32 +35,29 @@ namespace ConsoleApp1
 
         static void Main(string[] args)
         {   
-            string ContractName, ContractLocation, LenderName, LenderPass, BorrowerName, BorrowerPass, StartDate, FinishDate;
+            string ContractName, ContractLocation, LenderName, LenderPass, BorrowerName, BorrowerPass ;
             int ContractForm, Currency, CompensationType, PercentExist, PercentType,  RepaymentType, PaymentProcedure, PenaltyType, PennyType;
-            float ZaymSumm, ZaymPercent, CBPercent, ShtrafSize, PennyPercent, ItogSumm;
+            double ZaymSumm, ZaymPercent=0, CBPercent, ShtrafSize, PennyPercent, ItogSumm;
+            double PercentCount = 0; 
+            DateTime StartDate, FinishDate, DateTrebovania;
+            //Дата, до которого % в два раза превышающий ставку ЦБ не признавался ростовщическим!!!
+            DateTime RostDate = new DateTime(2018, 6, 1);
 
-            //Работа с датой:
-            //DateTime someDate = new DateTime(2002, 10, 9);
-            //Console.WriteLine(someDate.ToShortDateString());
-
-            //DateTime date1 = new DateTime(2015, 7, 20);
-            //DateTime date2 = new DateTime(2023, 8, 21);
-            //Console.WriteLine(date2.Subtract(date1).ToString("d"));
-            //TimeSpan resdate = date2.Subtract(date1);
-
-            //Console.WriteLine(resdate);
+            //Console.WriteLine("Год до которого % в два раза превышающий ставку ЦБ\n" +
+            //                  "не признавался ростовщическим " + RostDate);
 
 
-            //string count_days = date2.Subtract(date1).ToString(); 
-            //Console.WriteLine(count_days);
-            Console.WriteLine("Введите дату заключения договора");
-            DateTime date1 = inputDate();
-            Console.WriteLine("Введите дату возврата договора");
-            DateTime date2 = inputDate();
-            Console.WriteLine("Кол-во дней между датами = " + (date2.Day - date1.Day));
-            Console.WriteLine("Кол-во месяцев между датами = " + (date2.Month - date1.Month));
-            Console.WriteLine("Кол-во лет между датами = " + (date2.Year - date1.Year));
-            Console.WriteLine("Кол-во лет между датами = " + (date2.DayOfWeek - date1.DayOfWeek));
+            //Console.WriteLine("Введите дату заключения договора");
+            //DateTime date1 = inputDate();
+            //if (date1 > RostDate)
+            //    Console.WriteLine("Заём совершен после даты введения рост. проыентов");
+            //Console.WriteLine("Введите дату возврата договора");
+            //DateTime date2 = inputDate();
+            //Console.WriteLine(date1);
+            //Console.WriteLine("Кол-во дней между датами = " + (date2.Day - date1.Day));
+            //Console.WriteLine("Кол-во месяцев между датами = " + (date2.Month - date1.Month));
+            //Console.WriteLine("Кол-во лет между датами = " + (date2.Year - date1.Year));
+
 
 
 
@@ -81,8 +81,8 @@ namespace ConsoleApp1
             Console.Write("Введите Пасспортные данные Заёмщика:");
             BorrowerPass = Console.ReadLine();
             Console.WriteLine();
-            Console.Write("Введите дату заключения договора:");
-            StartDate = Console.ReadLine();
+            Console.WriteLine("Введите дату заключения договора:");
+            StartDate = inputDate();
             Console.WriteLine();
             Console.Write("Договор заключен в письменном виде? 1 - Да. 2 - Нет. Ваш ответ:");
             ContractForm = Convert.ToInt32(Console.ReadLine());
@@ -98,113 +98,140 @@ namespace ConsoleApp1
             Console.WriteLine();
             if (Currency == 2)
                 throw new Exception("Займ заключен в валюте, которую мы не обрабатываем");
-            //Console.Write("Введите дату возврата займа согласно договору:");
-            //FinishDate = Console.ReadLine();
-            //Console.WriteLine();
             Console.Write("В договоре явно указана безвозмездность? 1 - Да. 2 - Нет. ВАШ ОТВЕТ:");
             CompensationType = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine();
             switch (CompensationType)
             {
                 case 1:
-                    Console.WriteLine("Договор является безвозмездным, % ставка = 0 ");
-                    ZaymPercent = 0;
-                    break;
-                        
-                case 2:
-                    Console.Write("Процентная ставка явно указана в договоре? 1 - Да. 2 - Нет. Ваш ответ:");
-                    PercentExist = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine() ;
-
-                    switch (PercentExist)
                     {
-                        case 1:
-                            Console.Write("Введите процент прописанный в договоре:");
-                            ZaymPercent = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine();
-                            //var cultureInfo = new CultureInfo("en-US");
-                            Console.Write("Введите текущую процентную ставку ЦБ РФ:");
-                            CBPercent =Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine() ;
-                            // Добавить проверку на Дату с Ростовщическими процентами!!!!
-                            //if (ZaymPercent > 2 * CBPercent)
-                            //{
-                            //    try
-                            //    {
-
-                            //        var CurrentDate = DateTime.ParseExact(StartDate, "d", cultureInfo);
-                            //        Console.WriteLine(CurrentDate);
-                            //    }
-                            //    catch(FormatException)
-                            //    {
-                            //        Console.WriteLine("Unable to parse '{0}'", StartDate);
-                            //    }
-
-                            //    break;
-                            //    DateTime rostDate = new DateTime()
-                            //}
-                            break;
-
-                        case 2:
-                            if (ZaymSumm > 100000)
-                            {
-                                Console.Write("Введите текущую процентную ставку ЦБ РФ:");
-                                CBPercent = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                ZaymPercent = CBPercent;
-                            }
-                            else
-                                ZaymPercent = 0;
-                            Console.Write("ПО ДОГОВОРУ ПРОЦЕНТ НАЧИСЛЯЕТСЯ КАЖДЫЙ? 1 - ЧАС. 2 - ДЕНЬ. 3 - МЕСЯЦ. 4 - ГОД. 5 - Не Указан. ВАШ ОТВЕТ:");
-                            PercentType = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine();
-                            //ПРОВЕРКА НА ТО, УКЗАН ЛИ СРОК ВОЗВРАТА В ДОГОВОРЕ
-                            Console.Write("Дата возврата прописана в договоре? 1 - Да. 2 - Нет. ВАШ ОТВЕТ:");
-                            int ExistFinishDate = Convert.ToInt32(Console.ReadLine()) ;
-                            Console.WriteLine() ;
-                            if (ExistFinishDate == 1)
-                            {
-                                Console.Write("Введите дату возврата займа согласно договору:");
-                                FinishDate = Console.ReadLine();
-                                Console.WriteLine();
-                            }
-                            else
-                            {
-                                Console.Write("Введите дату предъявления требования займодавца о возврате дененых средств:");
-                                string DateTrebovania = Console.ReadLine();
-                                Console.WriteLine();
-                                //В переменную Finish Date присвоить значение по следующему правилу : (Что - то связанное с 30 днями после даты )
-                            }
-                            switch (PercentType)
-                            { case 1:
-                                    //Вычислить проценты начисляя ежечасно
-                                    break;
-
-                              case 2:
-                                    //Вычислить проценты начисляя ежедневно
-                                    break;
-
-                              case 3:
-                              case 5:
-                                    //Вычислить проценты начисляя ежемесячно
-                                    break;
-
-                                case 4:
-                                    //Вычислить проценты начилсяя ежегодно
-                                    break;
-
-                            
-
-
-
-                            }
-                            break;
-                       
-                                
+                        Console.WriteLine("Договор является безвозмездным, % ставка = 0 ");
+                        ZaymPercent = 0;
+                        break;
                     }
 
-                    break;
+
+                case 2:
+                    {
+                        Console.Write("Процентная ставка явно указана в договоре? 1 - Да. 2 - Нет. Ваш ответ:");
+                        PercentExist = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine();
+
+                        switch (PercentExist)
+                        {
+                            case 1:
+                                {
+                                    Console.Write("Введите процент прописанный в договоре:");
+                                    ZaymPercent = Convert.ToDouble(Console.ReadLine());
+                                    Console.WriteLine();
+                                    //В конечной реализации предполагается доставать ставку ЦБ рф из БД
+                                    Console.Write("Введите текущую процентную ставку ЦБ РФ:");
+                                    CBPercent = Convert.ToDouble(Console.ReadLine());
+                                    Console.WriteLine();
+                                    //Добавить проверку на Дату с Ростовщическими процентами!!!!
+                                    if (ZaymPercent >= 2 * CBPercent && StartDate > RostDate)
+                                    {
+                                        throw new Exception("Данный процент в 2 раза больше чем ключевая ставка ЦБ\n" +
+                                            "Значит данный процент признаётся ростовщическим!!!");
+                                    }
+                                    break;
+                                }
+
+
+                            case 2:
+                                {
+                                    if (ZaymSumm > 100000)
+                                    {
+                                        Console.Write("Введите текущую процентную ставку ЦБ РФ:");
+                                        CBPercent = Convert.ToInt32(Console.ReadLine());
+                                        Console.WriteLine();
+                                        ZaymPercent = CBPercent;
+                                    }
+                                    else
+                                        ZaymPercent = 0;
+                                    break;
+
+                                }
+                        }
+                        
+                        break;
+
+                    }
             }
+            Console.WriteLine("Текущая проценная ставка = " + ZaymPercent);
+             //ПРОВЕРКА НА ТО, УКЗАН ЛИ СРОК ВОЗВРАТА В ДОГОВОРЕ
+             Console.Write("Дата возврата прописана в договоре? 1 - Да. 2 - Нет. ВАШ ОТВЕТ:");                 
+             int ExistFinishDate = Convert.ToInt32(Console.ReadLine());
+             Console.WriteLine();
+            if (ExistFinishDate == 1)
+            {
+                Console.WriteLine("Введите дату возврата займа согласно договору:");
+                FinishDate = inputDate();
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine("Введите дату предъявления требования займодавца о возврате дененых средств:");
+                DateTrebovania = inputDate();
+                Console.WriteLine();
+                FinishDate = DateTrebovania.AddDays(30);
+                //В переменную Finish Date присвоить значение по следующему правилу : (Что - то связанное с 30 днями после даты )
+            }
+
+            Console.Write("ПО ДОГОВОРУ ПРОЦЕНТ НАЧИСЛЯЕТСЯ КАЖДЫЙ? 1 - ДЕНЬ. 2 - МЕСЯЦ. 3 - ГОД. 4 - Не Указан. ВАШ ОТВЕТ:");
+            PercentType = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine();
+            switch (PercentType)
+            {
+                case 1:
+                    {
+                        int Days = FinishDate.Day - StartDate.Day;
+                        PercentCount = Days * ZaymPercent/100*ZaymSumm;
+                        Console.WriteLine("Сумма процентов, которые были начислены поверх основной суммы долга = " + PercentCount);
+
+                        break;
+                    }
+                
+
+                case 2:
+                    {
+                        int Months = FinishDate.Month - StartDate.Month;
+                        PercentCount = Months * ZaymPercent / 100 * ZaymSumm;
+                        Console.WriteLine("Сумма процентов, которые были начислены поверх основной суммы долга = " + PercentCount);
+
+
+
+                        break;
+                    }
+                    
+
+                case 3:
+                    {
+                        int Years = FinishDate.Year - StartDate.Year;
+                        PercentCount = Years * ZaymPercent / 100 * ZaymSumm;
+                        Console.WriteLine("Сумма процентов, которые были начислены поверх основной суммы долга = " + PercentCount);
+
+                        break;
+                    }
+
+                case 4:
+                    {
+
+                        break;
+                    }
+               
+                  
+
+
+
+
+
+            }
+        
+
+
+
+
 
             //ВЫПОЛНИТЬ ПРОВЕРКУ НА ТО, ВОВРЕМЯ ЛИ ВЫПЛАЧЕН ДОЛГ, ЕСЛИ ДА ТО ВЫХОД, ЕСЛИ НЕТ ТО ПРОДОЛЖАЕМ
             Console.Write("В договоре указана сумма неустойки в случае просрочки выплаты долга? 1 - Да. 2 - Нет. Ваш ответ:");
