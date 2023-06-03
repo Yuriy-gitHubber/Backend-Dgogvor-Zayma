@@ -11,12 +11,58 @@ namespace ConsoleApp1
 {
     internal class Program
     {
+        static void CountTime()
+        { 
+        
+        }
+       static  DateTime inputDate()
+        {
+            DateTime date; // inputDate value
+            string input;
+
+            do
+            {
+                Console.WriteLine("Введите дату в формате дд.ММ.гггг (день.месяц.год):");
+                input = Console.ReadLine();
+            }
+            while (!DateTime.TryParseExact(input, "dd.MM.yyyy", null, DateTimeStyles.None, out date));
+
+            return date;
+        }
+
         static void Main(string[] args)
         {   
             string ContractName, ContractLocation, LenderName, LenderPass, BorrowerName, BorrowerPass, StartDate, FinishDate;
             int ContractForm, Currency, CompensationType, PercentExist, PercentType,  RepaymentType, PaymentProcedure, PenaltyType, PennyType;
             float ZaymSumm, ZaymPercent, CBPercent, ShtrafSize, PennyPercent, ItogSumm;
-            Console.WriteLine("Введите данные о договоре займа:");
+
+            //Работа с датой:
+            //DateTime someDate = new DateTime(2002, 10, 9);
+            //Console.WriteLine(someDate.ToShortDateString());
+
+            //DateTime date1 = new DateTime(2015, 7, 20);
+            //DateTime date2 = new DateTime(2023, 8, 21);
+            //Console.WriteLine(date2.Subtract(date1).ToString("d"));
+            //TimeSpan resdate = date2.Subtract(date1);
+
+            //Console.WriteLine(resdate);
+
+
+            //string count_days = date2.Subtract(date1).ToString(); 
+            //Console.WriteLine(count_days);
+            Console.WriteLine("Введите дату заключения договора");
+            DateTime date1 = inputDate();
+            Console.WriteLine("Введите дату возврата договора");
+            DateTime date2 = inputDate();
+            Console.WriteLine("Кол-во дней между датами = " + (date2.Day - date1.Day));
+            Console.WriteLine("Кол-во месяцев между датами = " + (date2.Month - date1.Month));
+            Console.WriteLine("Кол-во лет между датами = " + (date2.Year - date1.Year));
+            Console.WriteLine("Кол-во лет между датами = " + (date2.DayOfWeek - date1.DayOfWeek));
+
+
+
+            //------------------------------------------------------//
+            Console.WriteLine("Введите данные о договоре займа");
             Console.Write("Введите номер договора займа:");
             ContractName = Console.ReadLine();
             Console.WriteLine();
@@ -26,7 +72,7 @@ namespace ConsoleApp1
             Console.Write("Введите ФИО Заимодавца:");
             LenderName = Console.ReadLine();
             Console.WriteLine();
-            Console.Write("Введите Пасспортные данные Заимодавца :");
+            Console.Write("Введите Пасспортные данные Заимодавца:");
             LenderPass = Console.ReadLine();
             Console.WriteLine();
             Console.Write("Введите ФИО Заёмщика:");
