@@ -251,7 +251,8 @@ namespace ConsoleApp1
                         PenaltyType = Convert.ToInt32(Console.ReadLine());
                         switch (PenaltyType)
                         {
-                            case 1:
+
+                            case 1 :
                                 {
                                     //Неустойка представлена единоразовой выплатой - штрафом
                                     Console.Write("Введите сумму штрафа за просрочку выплаты займа: ");
@@ -284,7 +285,7 @@ namespace ConsoleApp1
                                             {
                                                 //Процент ПЕННИ начисляется ЕЖЕМЕСЯЧНО начиная с  определенная дата возврата по Текущую дату 
                                                 int Months = currentDate.Month - FinishDate.Month;
-                                                Console.WriteLine("Количество лет  = " + Months);
+                                                Console.WriteLine("Количество месяцев  = " + Months);
                                                 PennySum = Months * ZaymPercent / 100 * ZaymSumm;
                                                 Console.WriteLine("Сумма процентов, которые были начислены поверх основной суммы долга = " + PennySum);
                                                 break;
@@ -302,6 +303,55 @@ namespace ConsoleApp1
 
                                     }
 
+                                    break;
+                                }
+
+                            case 3: 
+                                {
+
+                                    //Неустойка представлена единоразовой выплатой - штрафом
+                                    Console.Write("Введите сумму штрафа за просрочку выплаты займа: ");
+                                    ShtrafSize = Convert.ToDouble(Console.ReadLine());
+                                    //Неустока представлена Пенни - процентом с определенным порядком начисления
+                                    Console.Write("ВВЕДИТЕ ПРОЦЕНТ НЕУСТОКИ СОГЛАСНО ДОГОВОРУ: ");
+                                    PennyPercent = Convert.ToDouble(Console.ReadLine());
+                                    Console.Write("ПОРЯДОК НАЧИСЛЕНИЯ ПЕННИ ПРОИСХОДИТ КАЖДЫЙ? 1 -  ДЕНЬ. 2 - МЕСЯЦ. 3 - ГОД. ВАШ ОТВЕТ: ");
+                                    PennyType = Convert.ToInt32(Console.ReadLine());
+                                    //Подсчёт начисления пенни процента 
+                                    switch (PennyType)
+                                    {
+
+                                        case 1:
+                                            {
+                                                //Процент ПЕННИ начилсяется ЕЖЕДНЕВНО начиная с  определенная дата возврата по Текущую дату 
+                                                int Days = currentDate.Subtract(FinishDate).Days + 1;
+                                                Console.WriteLine("Количество дней  = " + Days);
+                                                PennySum = Days * PennyPercent / 100 * ZaymSumm;
+                                                Console.WriteLine("Сумма процентов, которые были начислены поверх основной суммы долга = " + PennySum);
+                                                break;
+                                            }
+
+                                        case 2:
+                                            {
+                                                //Процент ПЕННИ начисляется ЕЖЕМЕСЯЧНО начиная с  определенная дата возврата по Текущую дату 
+                                                int Months = currentDate.Month - FinishDate.Month;
+                                                Console.WriteLine("Количество месяцев  = " + Months);
+                                                PennySum = Months * ZaymPercent / 100 * ZaymSumm;
+                                                Console.WriteLine("Сумма процентов, которые были начислены поверх основной суммы долга = " + PennySum);
+                                                break;
+                                            }
+
+                                        case 3:
+                                            {
+                                                //Процент ПЕННИ начисляется ЕЖЕГОДНО начиная с  определенная дата возврата по Текущую дату 
+                                                int Years = currentDate.Year - FinishDate.Year;
+                                                Console.WriteLine("Количество лет  = " + Years);
+                                                PennySum = Years * ZaymPercent / 100 * ZaymSumm;
+                                                Console.WriteLine("Сумма процентов, которые были начислены поверх основной суммы долга = " + PennySum);
+                                                break;
+                                            }
+
+                                    }
                                     break;
                                 }
 
